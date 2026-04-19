@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import {
   ArrowUp,
-  CalendarDays,
+  Bike,
+  Box,
   ChevronDown,
   Clock3,
   Mail,
@@ -10,15 +11,13 @@ import {
   MessageCircle,
   Menu,
   Phone,
-  Play,
   Quote,
-  ShieldCheck,
+  Shield,
   Smile,
   SmilePlus,
-  Sparkles,
   Star,
-  Stethoscope,
-  Video,
+  Truck,
+  Zap,
   WandSparkles,
   X,
 } from 'lucide-react'
@@ -28,76 +27,102 @@ const Motion = motion
 
 const images = {
   hero:
-    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=2400&q=85',
+    'https://images.unsplash.com/photo-1587854692152-cbe660dbde36?auto=format&fit=crop&w=2400&q=85',
   aboutLeft:
-    'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1200&q=85',
+    'https://images.unsplash.com/photo-1631217314831-4cb2763fe14b?auto=format&fit=crop&w=1200&q=85',
   aboutRight:
-    'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1200&q=85',
-  video:
-    'https://images.unsplash.com/photo-1606265752439-1f18756aa86d?auto=format&fit=crop&w=2400&q=85',
+    'https://images.unsplash.com/photo-1587854692152-cbe660dbde36?auto=format&fit=crop&w=1200&q=85',
   team:
-    'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=85',
+    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=85',
 }
 
-const navItems = ['Home', 'Services', 'Dentists', 'Pages', 'Blog', 'Contact']
+const navItems = ['Home', 'Delivery', 'Why Us', 'Testimonials', 'Contact']
 
-const services = [
+const deliveryProducts = [
   {
-    icon: Stethoscope,
-    title: 'General Dentistry',
-    text: 'Complete oral care for every smile with cleanings, exams, and prevention.',
+    icon: Zap,
+    title: 'Pain Relief Medicines',
+    text: 'Fast-acting dental pain relief delivered within 30-60 mins',
   },
   {
-    icon: Sparkles,
-    title: 'Cosmetic Dentistry',
-    text: 'Whitening, veneers, and natural restorations shaped around your face.',
+    icon: Box,
+    title: 'Tooth Care Kits',
+    text: 'Complete oral hygiene kits with toothpaste, brush & mouthwash',
+  },
+  {
+    icon: Shield,
+    title: 'Post-Treatment Meds',
+    text: 'Prescribed medications after root canal, extraction & implants',
   },
   {
     icon: Smile,
-    title: 'Pediatric Dentistry',
-    text: 'Gentle, bright visits that help children feel calm, safe, and proud.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Restorative Dentistry',
-    text: 'Repair, implants, crowns, and bite care for comfort that lasts.',
+    title: 'Emergency Support',
+    text: 'Temporary solutions & expert advice for sudden tooth emergencies',
   },
 ]
 
-const doctors = [
+const trustPoints = [
   {
-    name: 'Dr. Anika Shah',
-    role: 'Smile Design',
-    img: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=85',
+    icon: Truck,
+    title: '30-60 Min Delivery',
+    text: 'Fast home delivery across Bangalore',
   },
   {
-    name: 'Dr. Leo Martin',
-    role: 'Implant Care',
-    img: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=800&q=85',
+    icon: Shield,
+    title: 'Certified Dentists',
+    text: 'All medicines prescribed by licensed dentists',
   },
   {
-    name: 'Dr. Mira Chen',
-    role: 'Family Dentistry',
-    img: 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?auto=format&fit=crop&w=800&q=85',
+    icon: Clock3,
+    title: '24/7 Available',
+    text: 'Order anytime, emergency support included',
+  },
+  {
+    icon: MapPin,
+    title: 'Bangalore Service',
+    text: 'Covering all major areas in Bangalore city',
+  },
+]
+
+const useCases = [
+  {
+    emoji: '😖',
+    title: 'Sudden Tooth Pain',
+    desc: 'Get pain relief medicines delivered instantly',
+  },
+  {
+    emoji: '🪥',
+    title: 'Post-Treatment Care',
+    desc: 'Required medications after dental procedures',
+  },
+  {
+    emoji: '🌙',
+    title: 'Night Emergency',
+    desc: 'Dental support available when clinics are closed',
+  },
+  {
+    emoji: '🏥',
+    title: 'Busy Schedule',
+    desc: 'No time to visit clinic? We deliver to you',
   },
 ]
 
 const testimonials = [
   {
-    name: 'Edward B.',
-    text: 'I never felt more comfortable at a dental office. The team explained everything clearly and I left smiling.',
+    name: 'Rajesh K.',
+    text: 'Got pain relief medicines delivered in 45 mins! Exactly what I needed at midnight.',
   },
   {
-    name: 'Michael S.',
-    text: 'Beautiful clinic, calm staff, and the treatment plan felt completely personal to me.',
+    name: 'Priya M.',
+    text: 'After my root canal, I needed medications urgently. They arrived in 35 mins with perfect instructions.',
   },
   {
-    name: 'Robert L.',
-    text: 'My family has been coming here for years. The care is consistent, warm, and excellent.',
+    name: 'Amit P.',
+    text: 'Best service! Delivery was fast, medicines were original, and the dentist consultation was helpful.',
   },
   {
-    name: 'Jasmine K.',
-    text: 'The appointment was smooth from check-in to follow-up. I finally enjoy visiting the dentist.',
+    name: 'Neha S.',
+    text: 'No more stress during tooth pain emergencies. This service is a lifesaver for busy people like me.',
   },
 ]
 
@@ -142,6 +167,11 @@ function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const handleWhatsApp = () => {
+    const message = 'Hi! I want dental medicines or home delivery. Please help.'
+    window.open(`https://wa.me/919790819757?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <Motion.header
       className={`siteHeader ${solid ? 'isSolid' : ''}`}
@@ -150,20 +180,28 @@ function Header() {
       transition={{ duration: 0.7, ease: [0.2, 0.8, 0.2, 1] }}
     >
       <nav className="navShell" aria-label="Primary navigation">
-        <Logo />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <Logo />
+          <span style={{ fontSize: '12px', opacity: 0.7, display: 'none' }}>📍 Bangalore</span>
+        </div>
         <div className="navLinks">
           {navItems.map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`}>
               {item}
-              {['Home', 'Services', 'Pages'].includes(item) && <ChevronDown size={14} />}
             </a>
           ))}
         </div>
         <div className="navActions">
-          <MagneticButton className="navCta">
-            <CalendarDays size={19} />
-            Book Appointment
-          </MagneticButton>
+          <Motion.button
+            className="btn"
+            onClick={handleWhatsApp}
+            whileHover={{ y: -3, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            style={{ display: 'flex', gap: '8px', alignItems: 'center' }}
+          >
+            <MessageCircle size={18} />
+            Order Now
+          </Motion.button>
           <Motion.button
             className="iconButton"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -185,7 +223,7 @@ function Header() {
         transition={{ duration: 0.24, ease: 'easeOut' }}
       >
         <div className="menuPanelHeader">
-          <span>Quick Menu</span>
+          <span>Menu</span>
           <button type="button" onClick={() => setOpen(false)} aria-label="Close menu">
             <X size={20} />
           </button>
@@ -203,8 +241,8 @@ function Header() {
             9790819757
           </a>
           <a href="#booking" onClick={() => setOpen(false)}>
-            <CalendarDays size={18} />
-            Book a visit
+            <MessageCircle size={18} />
+            Order on WhatsApp
           </a>
         </div>
       </Motion.div>
@@ -217,9 +255,14 @@ function Hero() {
   const y = useTransform(scrollYProgress, [0, 0.32], [0, 150])
   const scale = useTransform(scrollYProgress, [0, 0.32], [1, 1.1])
 
+  const handleWhatsApp = () => {
+    const message = 'Hi! I want dental medicines or home delivery. Please help.'
+    window.open(`https://wa.me/919790819757?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+  }
+
   return (
     <section className="heroSection" id="home">
-      <Motion.img src={images.hero} alt="A calm dental treatment room" className="heroImage" style={{ y, scale }} />
+      <Motion.img src={images.hero} alt="Dental medicines delivery at home" className="heroImage" style={{ y, scale }} />
       <div className="heroOverlay" />
       <Motion.div
         className="heroContent"
@@ -228,25 +271,31 @@ function Hero() {
         variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.25 } } }}
       >
         <Motion.div className="trustStrip" variants={reveal}>
-          <div className="avatarStack">
-            {doctors.map((doctor) => (
-              <img key={doctor.name} src={doctor.img} alt="" />
-            ))}
-          </div>
-          <span>Trusted by 23k happy patients</span>
+          <span>✓ 1000+ Happy Patients</span>
+          <span>•</span>
+          <span>⭐ 4.8 Rated</span>
+          <span>•</span>
+          <span>🚚 30-60 Min Delivery</span>
         </Motion.div>
-        <Motion.h1 variants={reveal}>Unforgettable Dental Care With Expert Precision</Motion.h1>
+        <Motion.h1 variants={reveal}>
+          🦷 Dental Care at Home – Fast, Safe & Trusted
+        </Motion.h1>
         <Motion.p variants={reveal}>
-          Modern family dentistry with gentle doctors, transparent treatment plans, and a clinic experience designed to feel calm from the first hello.
+          Medicines, Dental Kits & Expert Consultation Delivered to Your Doorstep in Bangalore. No clinic visit needed.
         </Motion.p>
         <Motion.div className="heroButtons" variants={reveal}>
-          <MagneticButton>
-            <CalendarDays size={20} />
-            Book Appointment
-          </MagneticButton>
-          <a className="ghostLink" href="#video">
-            <span><Play size={16} fill="currentColor" /></span>
-            Watch Story
+          <Motion.button
+            className="btn"
+            onClick={handleWhatsApp}
+            whileHover={{ y: -3, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <MessageCircle size={20} />
+            Order on WhatsApp
+          </Motion.button>
+          <a className="ghostLink" href="tel:9790819757">
+            <Phone size={16} />
+            Call Now
           </a>
         </Motion.div>
       </Motion.div>
@@ -256,16 +305,16 @@ function Hero() {
         animate={{ opacity: 1, x: 0, rotate: 0 }}
         transition={{ delay: 0.8, duration: 0.8, ease: [0.2, 0.8, 0.2, 1] }}
       >
-        <strong>98%</strong>
-        <span>Trusted Score</span>
+        <strong>30-60 mins</strong>
+        <span>Fast Delivery</span>
       </Motion.div>
       <Motion.div
         className="heroBadge"
         animate={{ y: [0, -12, 0] }}
         transition={{ repeat: Infinity, duration: 4.6, ease: 'easeInOut' }}
       >
-        <ShieldCheck />
-        Same-day emergency care
+        <Truck />
+        Available 24/7
       </Motion.div>
     </section>
   )
@@ -273,7 +322,7 @@ function Hero() {
 
 function About() {
   return (
-    <section className="aboutSection section" id="pages">
+    <section className="aboutSection section" id="about">
       <Motion.div
         className="aboutImage left"
         initial={{ opacity: 0, x: -50 }}
@@ -281,7 +330,7 @@ function About() {
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.75 }}
       >
-        <img src={images.aboutLeft} alt="Dentist checking a patient's smile" />
+        <img src={images.aboutLeft} alt="Dental medicines delivered to your home" />
       </Motion.div>
       <Motion.div
         className="aboutCopy"
@@ -290,13 +339,15 @@ function About() {
         viewport={{ once: true, amount: 0.35 }}
         variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
       >
-        <Motion.span className="eyebrow" variants={reveal}>About Us</Motion.span>
-        <Motion.h2 variants={reveal}>Dedicated Professionals Delivering Personalized Dental Excellence With Gentle Care</Motion.h2>
+        <Motion.span className="eyebrow" variants={reveal}>Why Dentia Home Delivery?</Motion.span>
+        <Motion.h2 variants={reveal}>
+          Your Dental Needs Delivered Fast, Prescribed by Certified Dentists
+        </Motion.h2>
         <Motion.p variants={reveal}>
-          Every visit is planned around comfort, clarity, and long-term oral health. We combine digital diagnostics with a warm chairside approach so treatment feels confident, not clinical.
+          Tooth pain at 2 AM? Post-treatment medicines needed? No time to visit clinic? We get it. Our service brings trusted dental solutions directly to your doorstep in Bangalore with expert guidance from licensed dentists. No hassle, no waiting.
         </Motion.p>
         <Motion.div variants={reveal}>
-          <MagneticButton>Book Appointment</MagneticButton>
+          <MagneticButton>Order Now on WhatsApp</MagneticButton>
         </Motion.div>
       </Motion.div>
       <Motion.div
@@ -306,7 +357,7 @@ function About() {
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.75, delay: 0.1 }}
       >
-        <img src={images.aboutRight} alt="Patient smiling after treatment" />
+        <img src={images.aboutRight} alt="Fast delivery of dental medicines" />
       </Motion.div>
     </section>
   )
@@ -314,7 +365,7 @@ function About() {
 
 function Services() {
   return (
-    <section className="servicesSection section" id="services">
+    <section className="servicesSection section" id="delivery">
       <Motion.div
         className="sectionHeader"
         initial="hidden"
@@ -322,16 +373,16 @@ function Services() {
         viewport={{ once: true, amount: 0.4 }}
         variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
       >
-        <Motion.span className="eyebrow" variants={reveal}>Our Services</Motion.span>
-        <Motion.h2 variants={reveal}>Personalized dental solutions for patients of all ages</Motion.h2>
+        <Motion.span className="eyebrow" variants={reveal}>What We Deliver</Motion.span>
+        <Motion.h2 variants={reveal}>🦷 Complete Dental Care – Delivered to Your Door</Motion.h2>
       </Motion.div>
       <div className="serviceGrid">
-        {services.map((service, index) => {
-          const Icon = service.icon
+        {deliveryProducts.map((product, index) => {
+          const Icon = product.icon
           return (
             <Motion.article
               className="serviceCard"
-              key={service.title}
+              key={product.title}
               initial={{ opacity: 0, y: 46 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -339,11 +390,11 @@ function Services() {
               whileHover={{ y: -12 }}
             >
               <span className="serviceIcon"><Icon size={58} /></span>
-              <h3>{service.title}</h3>
-              <p>{service.text}</p>
+              <h3>{product.title}</h3>
+              <p>{product.text}</p>
               <Motion.a href="#booking" className="roundLink" whileHover={{ width: 118 }}>
-                <span>+</span>
-                <em>Read</em>
+                <span>→</span>
+                <em>Order</em>
               </Motion.a>
             </Motion.article>
           )
@@ -353,48 +404,67 @@ function Services() {
   )
 }
 
-function VideoBand() {
+function WhyChooseUs() {
   return (
-    <section className="videoBand" id="video">
-      <img src={images.video} alt="Dentist examining a patient" />
-      <div className="videoShade" />
-      <Motion.button
-        className="playButton"
-        aria-label="Play clinic story"
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.94 }}
+    <section className="videoBand" id="why-us" style={{ background: 'linear-gradient(135deg, #477dd8 0%, #74d8f0 100%)', padding: '80px 40px' }}>
+      <Motion.div
+        className="sectionHeader"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.4 }}
+        variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
+        style={{ textAlign: 'center', color: 'white', marginBottom: '60px' }}
       >
-        <Play fill="currentColor" size={38} />
-      </Motion.button>
+        <Motion.span className="eyebrow" variants={reveal} style={{ color: '#f4f8fc' }}>Why Choose Dentia?</Motion.span>
+        <Motion.h2 variants={reveal} style={{ color: 'white' }}>We're Fast, Trusted & Always There When You Need Us</Motion.h2>
+      </Motion.div>
+      <div className="serviceGrid">
+        {trustPoints.map((point, index) => {
+          const Icon = point.icon
+          return (
+            <Motion.article
+              key={point.title}
+              initial={{ opacity: 0, y: 46 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.55, delay: index * 0.08 }}
+              style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(10px)', padding: '30px', borderRadius: '12px', textAlign: 'center', color: 'white' }}
+            >
+              <Icon size={48} style={{ margin: '0 auto 16px', color: '#f4f8fc' }} />
+              <h3 style={{ color: 'white', marginBottom: '8px' }}>{point.title}</h3>
+              <p style={{ color: '#f4f8fc', fontSize: '14px' }}>{point.text}</p>
+            </Motion.article>
+          )
+        })}
+      </div>
     </section>
   )
 }
 
-function Doctors() {
+function WhenYouNeedUs() {
   return (
     <section className="doctorsSection section" id="dentists">
       <div className="splitHeader">
         <div>
-          <span className="eyebrow">Dentists</span>
-          <h2>Meet the team behind the calmest appointments in town</h2>
+          <span className="eyebrow">Use Cases</span>
+          <h2>When You Need Us Most</h2>
         </div>
-        <p>Specialists in prevention, smile design, orthodontics, implants, and family care work together under one roof.</p>
+        <p>We're here for every moment when dental care matters most to you.</p>
       </div>
       <div className="doctorGrid">
-        {doctors.map((doctor, index) => (
+        {useCases.map((useCase, index) => (
           <Motion.article
             className="doctorCard"
-            key={doctor.name}
+            key={useCase.title}
             initial={{ opacity: 0, y: 34 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ delay: index * 0.1 }}
+            style={{ textAlign: 'center', padding: '30px' }}
           >
-            <img src={doctor.img} alt={doctor.name} />
-            <div>
-              <h3>{doctor.name}</h3>
-              <p>{doctor.role}</p>
-            </div>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>{useCase.emoji}</div>
+            <h3>{useCase.title}</h3>
+            <p>{useCase.desc}</p>
           </Motion.article>
         ))}
       </div>
@@ -426,40 +496,20 @@ function Testimonials() {
 }
 
 function Booking() {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    service: '',
-    date: '',
-  })
-
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormData((current) => ({ ...current, [name]: value }))
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    const message = [
-      'Hello Dentia, I want to book an appointment.',
-      `Name: ${formData.name || 'Not provided'}`,
-      `Phone: ${formData.phone || 'Not provided'}`,
-      `Service: ${formData.service || 'Not selected'}`,
-      `Preferred Date: ${formData.date || 'Not selected'}`,
-    ].join('\n')
-
+  const handleWhatsAppQuick = () => {
+    const message = 'Hi! I want dental medicines and home delivery. Please help with available options.'
     window.open(`https://wa.me/919790819757?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
   }
 
   return (
     <section className="bookingSection section" id="booking">
       <div className="bookingVisual">
-        <img src={images.team} alt="Dental team preparing treatment" />
+        <img src={images.team} alt="Dental medicines ready for delivery" />
         <div className="floatingHours">
-          <Clock3 />
+          <Truck />
           <div>
-            <strong>Open Today</strong>
-            <span>9:00 AM - 7:30 PM</span>
+            <strong>Service Hours</strong>
+            <span>Available 24/7 on WhatsApp</span>
           </div>
         </div>
       </div>
@@ -470,48 +520,34 @@ function Booking() {
         viewport={{ once: true, amount: 0.35 }}
         transition={{ duration: 0.65 }}
       >
-        <span className="eyebrow">Book A Visit</span>
-        <h2>Start with a gentle consultation</h2>
-        <form onSubmit={handleSubmit}>
-          <label>
-            <span>Name</span>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your name"
-            />
-          </label>
-          <label>
-            <span>Phone</span>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="9790819757"
-            />
-          </label>
-          <label>
-            <span>Service</span>
-            <select name="service" value={formData.service} onChange={handleChange}>
-              <option value="" disabled>Choose service</option>
-              <option>General Dentistry</option>
-              <option>Cosmetic Dentistry</option>
-              <option>Dental Implants</option>
-              <option>Pediatric Care</option>
-            </select>
-          </label>
-          <label>
-            <span>Preferred Date</span>
-            <input type="date" name="date" value={formData.date} onChange={handleChange} />
-          </label>
-          <button type="submit" className="btn formButton">
-            <MessageCircle size={19} />
-            Send To WhatsApp
-          </button>
-        </form>
+        <span className="eyebrow">Order Now</span>
+        <h2>Get Dental Care at Your Doorstep</h2>
+        <p style={{ marginBottom: '24px', fontSize: '15px', color: '#666' }}>
+          Skip the visit. Order medicines, kits & emergency supplies directly to your home in Bangalore.
+        </p>
+        <div style={{ display: 'flex', gap: '12px', flexDirection: 'column' }}>
+          <Motion.button
+            className="btn"
+            onClick={handleWhatsAppQuick}
+            whileHover={{ y: -3, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            style={{ width: '100%', justifyContent: 'center' }}
+          >
+            <MessageCircle size={20} />
+            Order on WhatsApp
+          </Motion.button>
+          <a 
+            href="tel:9790819757" 
+            className="ghostLink"
+            style={{ textAlign: 'center', padding: '12px 24px', display: 'flex', justifyContent: 'center', gap: '8px' }}
+          >
+            <Phone size={18} />
+            Call Us: 9790819757
+          </a>
+        </div>
+        <p style={{ marginTop: '20px', fontSize: '12px', color: '#999', textAlign: 'center' }}>
+          Serving Bangalore • 30-60 min delivery • Certified prescriptions
+        </p>
       </Motion.div>
     </section>
   )
@@ -523,34 +559,35 @@ function Footer() {
       <div className="footerGrid">
         <div>
           <Logo light />
-          <p>High-quality, personalized dental care for families who want healthy smiles for life.</p>
+          <p>Dental medicines & care delivered to your home in Bangalore. Fast, safe, and trusted by 1000+ happy customers.</p>
           <div className="socials">
-            <a href="#home" aria-label="Facebook">f</a>
-            <a href="#home" aria-label="Instagram"><WandSparkles size={20} /></a>
-            <a href="#home" aria-label="Youtube"><Video size={20} /></a>
+            <a href="#home" aria-label="WhatsApp">💬</a>
+            <a href="#home" aria-label="Instagram">📱</a>
+            <a href="#home" aria-label="Call">☎️</a>
           </div>
         </div>
         <div>
-          <h3>Company</h3>
-          {['Home', 'Our Services', 'Gallery', 'About Us', 'Blog', 'Contact'].map((item) => (
+          <h3>Quick Links</h3>
+          {['Home', 'What We Deliver', 'Why Us', 'Order', 'Contact'].map((item) => (
             <a key={item} href="#home">{item}</a>
           ))}
         </div>
         <div>
-          <h3>Our Services</h3>
-          {services.map((service) => (
-            <a key={service.title} href="#services">{service.title}</a>
+          <h3>Our Products</h3>
+          {deliveryProducts.map((product) => (
+            <a key={product.title} href="#delivery">{product.title}</a>
           ))}
         </div>
         <div>
-          <h3>Contact Us</h3>
-          <p className="contactLine"><MapPin size={19} /> 100 S Main St, New York, NY</p>
+          <h3>Service Area</h3>
+          <p className="contactLine"><MapPin size={19} /> Bangalore City & Suburbs</p>
           <p className="contactLine"><Phone size={19} /> 9790819757</p>
-          <p className="contactLine"><Mail size={19} /> contact@dentiacare.com</p>
+          <p className="contactLine"><MessageCircle size={19} /> Order on WhatsApp</p>
+          <p style={{ marginTop: '12px', fontSize: '12px', color: '#aaa' }}>⏱️ 30-60 min delivery • 24/7 available</p>
         </div>
       </div>
       <div className="footerBottom">
-        <span>Copyright 2026 - dentia clinic</span>
+        <span>Copyright 2026 - Dentia Home Delivery</span>
         <span>Terms & Conditions</span>
         <span>Privacy Policy</span>
       </div>
@@ -578,6 +615,71 @@ function ScrollTop() {
   )
 }
 
+function FloatingButtons() {
+  const handleWhatsApp = () => {
+    const message = 'Hi! I want dental medicines or home delivery. Please help.'
+    window.open(`https://wa.me/919790819757?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer')
+  }
+
+  return (
+    <div style={{
+      position: 'fixed',
+      bottom: '30px',
+      right: '30px',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '12px',
+      zIndex: 999,
+    }}>
+      <Motion.button
+        onClick={handleWhatsApp}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '50%',
+          background: '#25D366',
+          border: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 20px rgba(37, 211, 102, 0.4)',
+          color: 'white',
+          fontSize: '28px',
+        }}
+        title="Order on WhatsApp"
+      >
+        💬
+      </Motion.button>
+      <Motion.a
+        href="tel:9790819757"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+          width: '56px',
+          height: '56px',
+          borderRadius: '50%',
+          background: '#477dd8',
+          border: 'none',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 20px rgba(71, 125, 216, 0.4)',
+          color: 'white',
+          fontSize: '24px',
+          textDecoration: 'none',
+        }}
+        title="Call Us"
+      >
+        ☎️
+      </Motion.a>
+    </div>
+  )
+}
+
 function App() {
   return (
     <>
@@ -586,13 +688,14 @@ function App() {
         <Hero />
         <About />
         <Services />
-        <VideoBand />
-        <Doctors />
+        <WhyChooseUs />
+        <WhenYouNeedUs />
         <Testimonials />
         <Booking />
       </main>
       <Footer />
       <ScrollTop />
+      <FloatingButtons />
     </>
   )
 }
